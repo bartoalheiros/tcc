@@ -18,15 +18,27 @@ library(gt)
 setwd("H:/Meu Drive/UFRPE/TCC/artigo/artigo")
 
 
-# Passo 2: carregar o banco de dados
-df <- read.csv('dados-pernambuco-tuberculose-hiv-2012-2022.csv', sep = ';', dec = ',')
-df <- data.frame(df)
+# carrega o banco de dados
+df <- read.csv2('dados-pernambuco-tuberculose-hiv-2012-2022.csv', sep = ';', dec = ',')
+# remove a última coluna do dataframe('Total')
+df <- df[,-13]
 #View(df)
+df <- rename(df, '2012'='X2012','2013'='X2013','2014'='X2014','2015'='X2015','2016'='X2016','2017'='X2017','2018'='X2018','2019'='X2019','2020'='X2020','2021'='X2021','2022'='X2022')
+df2 <- subset(df,id == 2 )
+summarize(df)
+#criar tabela
+df %>%
+  gt()
+  
+#df %>%
+ # filter(HIV == "Positivo" & HIV == "Negativo") %>%
+  #gt()
 
 #pega a quantidade de casos com hiv positivo no ano de 2022
-hiv_positivo_2022 <- df[df$HIV == 'Positivo', c('X2012','X2013','X2014','X2015','X2016','X2017','X2018','X2019','X2020','X2021','X2022')]
-hiv_positivo_2022 <- rename(hiv_positivo_2022, '2012'='X2012','2013'='X2013','2014'='X2014','2015'='X2015','2016'='X2016','2017'='X2017','2018'='X2018','2019'='X2019','2020'='X2020','2021'='X2021','2022'='X2022')
-View(hiv_positivo_2022)
+hiv_positivo_2022_pos <- df[df$HIV == 'Positivo', c('2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022')]
+hiv_positivo_2022_tot <- df[df$HIV == 'Total', c('2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022')]
+View(hiv_positivo_2022_pos)
+View(hiv_positivo_2022_tot)
 #outro jeito de fazer o mesmo:
 #hiv_pos_22 <- subset(df, HIV == "Positivo")$X2022
 
